@@ -7,3 +7,6 @@ When `gunicorn` or `uvicorn` are started with multiple workers, it forks off mul
 (2) requires a shared object or synchronization of some kind among the web server's worker processes. Sharing a complex object like `multiprocessing.Pool` seems hard to do.
 
 I opted to instead use a Celery server, which every worker process throws tasks at. This is effectively a shared process pool. The behavior we get is as follows: if Celery manages a pool of 15 processes, and two requests come in each requesting to run 10 tasks, then these are 20 tasks total, and 5 of them will block before 5 of the first 15 tasks are run to completion.
+
+StackOverflow threads:
+- https://stackoverflow.com/questions/64514398/python-multiprocessing-within-flask-request-with-gunicorn-nginx
