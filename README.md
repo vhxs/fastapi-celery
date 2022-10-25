@@ -1,4 +1,4 @@
-Quickest example I could come up with where a web application's workers share a common process pool.
+Quickest example I could come up with where a web server's workers share a common process pool.
 
 When `gunicorn` or `uvicorn` are started with multiple workers, it forks off multiple processes that concurrently handle HTTP requests. If one wants to use a process pool to handle these requests, either (1) each request must create an ephemeral process pool or (2) they must share a long-lived pool
 
