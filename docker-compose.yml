@@ -1,14 +1,18 @@
 services:
   celery_worker:
-    build: ./
-    command: celery -A celery_config worker -c 15 -l INFO
+    build:
+      context: ./
+    command: celery -A src.config.config.celery_app worker -c 15 -l INFO
     depends_on:
       - redis
   redis:
     image: redis
+    ports:
+      - 6379:6379
   ui:
-    build: ./
-    command: poetry run python3 webserver.py
+    build:
+      context: ./
+    command: bash -c "cp /usr/src/app/src/webserver/webserver.py /usr/src/app/ && poetry run python3 webserver.py"
     ports:
       - 8000:8000
     depends_on:
